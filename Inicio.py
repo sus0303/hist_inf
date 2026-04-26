@@ -131,7 +131,7 @@ if st.session_state.analysis_done:
     elif "sorprendido" in resultado.lower():
         st.info(" ˶°ㅁ° Algo llamó tu atención")
     else:
-        st.info(" - .•Emoción detectada")
+        st.info("  ╹ -╹ Emoción detectada")
 
 # ---------------- WARNING ----------------
 if not api_key:
