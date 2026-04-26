@@ -125,7 +125,7 @@ if st.session_state.analysis_done:
     if "feliz" in resultado.lower():
         st.success("•ᴗ• Emoción positiva detectada")
     elif "triste" in resultado.lower():
-        st.info("• ᴖ • Tómate un momento para ti")
+        st.info("˙◠˙ Tómate un momento para ti")
     elif "enojado" in resultado.lower():
         st.warning("•̀ ᴖ •́  Libera esa energía de forma sana")
     elif "sorprendido" in resultado.lower():
