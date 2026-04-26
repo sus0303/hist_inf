@@ -27,7 +27,7 @@ def encode_image_to_base64(image_path):
         return "Error: La imagen no se encontró en la ruta especificada."
 
 
-# Streamlit 
+# ---------------- UI ----------------
 st.set_page_config(page_title='Detector de Emociones')
 st.title('🎭 Detector de Emociones')
 
@@ -40,7 +40,7 @@ st.subheader("Dibuja una cara con una emoción y presiona analizar")
 # Canvas
 drawing_mode = "freedraw"
 stroke_width = st.sidebar.slider('Selecciona el ancho de línea', 1, 30, 5)
-stroke_color = "#000000" 
+stroke_color = "#000000"
 bg_color = '#FFFFFF'
 
 canvas_result = st_canvas(
@@ -63,18 +63,17 @@ client = OpenAI(api_key=api_key)
 
 analyze_button = st.button("Analiza la emoción", type="secondary")
 
-# Procesamiento
+# ---------------- PROCESAMIENTO ----------------
 if canvas_result.image_data is not None and api_key and analyze_button:
 
     with st.spinner("Analizando ..."):
         input_numpy_array = np.array(canvas_result.image_data)
         input_image = Image.fromarray(input_numpy_array.astype('uint8')).convert('RGBA')
         input_image.save('img.png')
-        
+
         base64_image = encode_image_to_base64("img.png")
         st.session_state.base64_image = base64_image
-            
-        # PROMPT DE EMOCIONES 🔥
+
         prompt_text = (
             "Analiza este dibujo de una cara o expresión y determina la emoción principal "
             "(feliz, triste, enojado, sorprendido, confundido, etc.). "
@@ -86,41 +85,35 @@ if canvas_result.image_data is not None and api_key and analyze_button:
             "2. ...\n"
             "3. ..."
         )
-    
-        try:
-            full_response = ""
-            message_placeholder = st.empty()
 
+        try:
             response = openai.chat.completions.create(
-              model= "gpt-4o-mini",
-              messages=[
-                {
-                   "role": "user",
-                   "content": [
-                     {"type": "text", "text": prompt_text},
-                     {
-                       "type": "image_url",
-                       "image_url": {
-                         "url": f"data:image/png;base64,{base64_image}",
-                       },
-                     },
-                   ],
-                  }
+                model="gpt-4o-mini",
+                messages=[
+                    {
+                        "role": "user",
+                        "content": [
+                            {"type": "text", "text": prompt_text},
+                            {
+                                "type": "image_url",
+                                "image_url": {
+                                    "url": f"data:image/png;base64,{base64_image}",
+                                },
+                            },
+                        ],
+                    }
                 ],
-              max_tokens=500,
+                max_tokens=500,
             )
-            
+
             if response.choices[0].message.content is not None:
-                full_response += response.choices[0].message.content
-                message_placeholder.markdown(full_response)
-            
-            st.session_state.full_response = full_response
-            st.session_state.analysis_done = True
+                st.session_state.full_response = response.choices[0].message.content
+                st.session_state.analysis_done = True
 
         except Exception as e:
-            st.error(f"An error occurred: {e}")
+            st.error(f"Error: {e}")
 
-# Resultado
+# ---------------- RESULTADO ----------------
 if st.session_state.analysis_done:
     st.divider()
     st.subheader("🧠 Resultado")
@@ -140,6 +133,6 @@ if st.session_state.analysis_done:
     else:
         st.info("🤔 Emoción detectada")
 
-# Warning
+# ---------------- WARNING ----------------
 if not api_key:
     st.warning("Por favor ingresa tu API key.")
