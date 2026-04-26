@@ -29,7 +29,7 @@ def encode_image_to_base64(image_path):
 
 # ---------------- UI ----------------
 st.set_page_config(page_title='Detector de Emociones')
-st.title('🎭 Detector de Emociones')
+st.title('Detector de Emociones ｡𖦹°‧')
 
 with st.sidebar:
     st.subheader("Acerca de:")
