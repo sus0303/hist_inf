@@ -33,9 +33,9 @@ st.title('Detector de Emociones ｡𖦹°‧')
 
 with st.sidebar:
     st.subheader("Acerca de:")
-    st.subheader("Dibuja una cara (feliz, triste, enojada, etc.) y la IA interpretará la emoción y te dará recomendaciones")
+    st.subheader("Dibuja una cara (feliz, triste, enojada, etc.) para darte recomendaciones")
 
-st.subheader("Dibuja una cara con una emoción y presiona analizar")
+st.subheader("Dibuja una cara con una emoción")
 
 # Canvas
 drawing_mode = "freedraw"
