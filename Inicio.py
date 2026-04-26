@@ -116,22 +116,22 @@ if canvas_result.image_data is not None and api_key and analyze_button:
 # ---------------- RESULTADO ----------------
 if st.session_state.analysis_done:
     st.divider()
-    st.subheader("🧠 Resultado")
+    st.subheader("Resultado ｡𖦹°‧")
 
     resultado = st.session_state.full_response
     st.write(resultado)
 
     # Feedback visual
     if "feliz" in resultado.lower():
-        st.success("😊 Emoción positiva detectada")
+        st.success("•ᴗ• Emoción positiva detectada")
     elif "triste" in resultado.lower():
-        st.info("😢 Tómate un momento para ti")
+        st.info("• ᴖ • Tómate un momento para ti")
     elif "enojado" in resultado.lower():
-        st.warning("😡 Libera esa energía de forma sana")
+        st.warning("•̀ ᴖ •́  Libera esa energía de forma sana")
     elif "sorprendido" in resultado.lower():
-        st.info("😲 Algo llamó tu atención")
+        st.info(" ˶°ㅁ° Algo llamó tu atención")
     else:
-        st.info("🤔 Emoción detectada")
+        st.info(" - .•Emoción detectada")
 
 # ---------------- WARNING ----------------
 if not api_key:
